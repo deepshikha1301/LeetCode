@@ -1,26 +1,31 @@
-import java.util.*;
-
 public class Main {
 
 	public static void main(String[] args) {
 		
-		int[] nums = {5,2,2};
+		int[] nums = {2,2,3,1};
 		int ans = thirdMax(nums);
 		
 		 System.out.print(ans);
 	}
 	
 	public static int thirdMax(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        for(int n:nums){
-            set.add(n);
-        }
-        int[] arr = new int[set.size()];
-        int i=0;
-        for(int num:set){
-            arr[i++]=num;
-        }
-        Arrays.sort(arr);
-        return (arr.length>=3)?arr[arr.length-3]:arr[arr.length-1];
+        long max = Long.MIN_VALUE;
+		long secondMax = Long.MIN_VALUE;
+		long thirdMax = Long.MIN_VALUE;
+
+		for (int num : nums) {
+			if (num > max) {
+				thirdMax = secondMax;
+				secondMax = max;
+				max = num;
+			} else if (num > secondMax && num < max) {
+				thirdMax = secondMax;
+				secondMax = num;
+			} else if (num > thirdMax && num < secondMax) {
+				thirdMax = num;
+			}
+		}
+		int result = (thirdMax == Long.MIN_VALUE) ? (int) max : (int) thirdMax;
+        return result;
     }
 }
